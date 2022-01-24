@@ -8,3 +8,13 @@ class BlogSerializer(serializers.Serializer):
     code = serializers.CharField(style={'base_template': 'textarea.html'})
     linenos = serializers.BooleanField(required=False)
     
+    def create(self, validated_data):
+        return Blog.objects.create(**validated_data)
+    
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.author = validated_data.get('author', instance.author)
+        instance.code = validated_data.get('code', instance.code)
+        instance.linenos = validated_data.get('linenos', instance.linenos)
+        instance.save()
+        return instance
