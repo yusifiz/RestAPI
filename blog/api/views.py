@@ -1,11 +1,11 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from blog.api.serializers import BlogSerializer
-from blog.models import Blog
+from blog.api.serializers import BlogSerializer, UserSerializer
+from blog.models import Blog, User
 from rest_framework import status
 from django.http import Http404, HttpResponse, JsonResponse
 from rest_framework.views import APIView
-from rest_framework import permissions
+from rest_framework import permissions, generics
 
 
 class BlogListAPIView(APIView):
@@ -24,6 +24,17 @@ class BlogListAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response (status=status.HTTP_400_BAD_REQUEST, message = {'message': 'Bad request message'})
+    
+    
+class UserList(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    
+
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    lookup_field = 'username'
     
     
 class BlogDetailAPIView(APIView):
