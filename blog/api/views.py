@@ -5,9 +5,14 @@ from blog.models import Blog
 from rest_framework import status
 from django.http import Http404, HttpResponse, JsonResponse
 from rest_framework.views import APIView
+from rest_framework import permissions
 
 
 class BlogListAPIView(APIView):
+    
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,]
+    
+    
     def get(self, request):
         blog = Blog.objects.all()
         serializer = BlogSerializer(blog, many = True)
@@ -22,6 +27,9 @@ class BlogListAPIView(APIView):
     
     
 class BlogDetailAPIView(APIView):
+    
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,]
+    
     def get_object(self, pk):
         try:
             return Blog.objects.get(pk=pk)
