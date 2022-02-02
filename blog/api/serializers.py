@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from blog.models import Blog
+from blog.models import Blog, User
 
 
 # class BlogSerializer(serializers.Serializer):
@@ -19,8 +19,16 @@ from blog.models import Blog
 #         instance.save()
 #         return instance
 
+class UserSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = User
+        fields = '__all__'
+
 
 class BlogSerializer(serializers.ModelSerializer):
+    
+    author = UserSerializer()
     
     class Meta:
         model = Blog

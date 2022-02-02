@@ -1,4 +1,3 @@
-from unicodedata import name
 from django.urls import path
 from .views import BlogListAPIView ,BlogDetailAPIView
 # from .views import blog_list_create, blog_detail

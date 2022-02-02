@@ -11,7 +11,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
     
     def __str__(self):
-        return self.first_name
+        return self.username
 
 class Blog(models.Model):
     author = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
